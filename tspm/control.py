@@ -49,23 +49,30 @@ def register_read_command(
         logger.info('returned data: %s' % data)
     else:
         logger.warning('did not receive valid data!')
+
+    write_sock.close()
+    read_sock.close()
     return data
 
 
 def reset_command():
     """
+    send 0x3E reset command to register 0
 
     :return:
     """
-    logger.debug('running reset command')
+    logger.debug('running reset command (0x3E)')
+    register_write_command(register=0, value=0x3E)
 
 
 def reset_all_command():
     """
+    send 0x3F reset all command to register 0
 
     :return:
     """
-    logger.debug('running reset all command')
+    logger.debug('running reset all command (0x3F')
+    register_write_command(register=0, value=0x3F)
 
 
 def register_write_command(register, value):
@@ -95,11 +102,3 @@ def spi_write_command(register, value):
     :return:
     """
     logger.debug('running spi write command with value %d on register %d' % (value, register))
-
-
-def clean_up_command():
-    """
-
-    :return:
-    """
-    logger.debug('running cleanup command')

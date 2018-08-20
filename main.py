@@ -56,14 +56,6 @@ def setup_parser():
         required=False,
         help='write 408 values into FIFO register 3-4'
     )
-    group.add_argument(     # TODO: most likely not required as this is standalone only!
-        '--cleanup',
-        action='store_true',
-        default=False,
-        required=False,
-        help='clean up haning udp objects'
-
-    )
 
     p.add_argument('--version', action='version', version=tspm.VERSION)
     return p
@@ -75,10 +67,7 @@ if __name__ == '__main__':
     parser = setup_parser()
     args = parser.parse_args()
 
-    if args.cleanup:
-        logger.info('attempting cleanup of calibration')
-        tspm.control.clean_up_command()
-    elif args.read is not None:
+    if args.read is not None:
         logger.info('attempting to read from register %d' % args.read[0])
         tspm.control.register_read_command(register=args.read[0])
     elif args.reset:
