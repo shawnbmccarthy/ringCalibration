@@ -4,6 +4,8 @@ import socket
 import struct
 import tspm
 
+from numpy import uint8
+
 logger = logging.getLogger(__name__)
 
 
@@ -61,8 +63,8 @@ def reset_command():
 
     :return:
     """
-    logger.debug('running reset command (0x3E)')
-    register_write_command(register=0, value=0x3E)
+    logger.debug('running reset command(%d)' % tspm.TSPM_COMMANDS['RESET'])
+    register_write_command(register=0, value=tspm.TSPM_COMMANDS['RESET'])
 
 
 def reset_all_command():
@@ -71,18 +73,19 @@ def reset_all_command():
 
     :return:
     """
-    logger.debug('running reset all command (0x3F')
-    register_write_command(register=0, value=0x3F)
+    logger.debug('running reset all command(%d)' % tspm.TSPM_COMMANDS['RESET_ALL'])
+    register_write_command(register=0, value=tspm.TSPM_COMMANDS['RESET_ALL'])
 
 
-def register_write_command(register, value):
+def register_write_command(register, value, host=tspm.DEFAULT_UDP_IP):
     """
-
+    write a value into register
     :param register:
     :param value:
     :return:
     """
     logger.debug('running write command with value %d on register %d' % (value, register))
+
 
 
 def spi_read_command(register):
